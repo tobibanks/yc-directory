@@ -20,15 +20,13 @@ export const experimental_ppr = true
 
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params).id
-  console.log(id)
 
   const [post, { select: editorPosts }] = await Promise.all([
     client.fetch(STARTUP_BY_ID_QUERY, { id }),
     client.fetch(PLAYLIST_BY_SLUG_QUERY, {
-      slug: "editor-picks-new"
+      slug: "editors-pick-new"
     })
   ])
-  console.log("Post data:", post)
 
   if (!post) return notFound()
 
@@ -90,7 +88,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
         {editorPosts?.length > 0 && (
           <div className="max-w-4xl mx-auto">
-            <p className="text-30-semibold">Editor Picks</p>
+            <p className="text-30-semibold">Editor's Picks</p>
 
             <ul className="mt-7 card_grid-sm">
               {editorPosts.map((post: StartupTypeCard, i: number) => (
